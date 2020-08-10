@@ -1,4 +1,6 @@
 # escape=`
+# Set Gauge API timeout to 60s for big project need more time to do dotnet restore.
+ARG GAUGE_TIMEOUT=60000
 
 # Get Nodejs
 FROM mcr.microsoft.com/powershell:nanoserver-1809 AS downloadnodejs
@@ -22,5 +24,6 @@ COPY gauge-dotnet-1.1.4.zip .
 RUN gauge install dotnet -f .\gauge-dotnet-1.1.4.zip
 RUN gauge install html-report 
 RUN gauge install screenshot
+RUN gauge config runner_connection_timeout %GAUGE_TIMEOUT%
 
 
